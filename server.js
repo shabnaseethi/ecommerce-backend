@@ -5,7 +5,8 @@ const client = require('./config/dbconfig')
 const productRouter = require("./Routes/productRoutes");
 const loginRouter = require("./Routes/loginRoutes");
 const customerRouter = require("./Routes/CustomerRoutes");
-const cartRouter = require("./Routes/cartRoutes")
+const cartRouter = require("./Routes/cartRoutes");
+const orderRouter = require("./Routes/orderRoutes");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
@@ -16,6 +17,9 @@ const router = require("./Routes/productRoutes");
 const stripeRouter = require("./Routes/StripeRoutes");
 
 var path = require('path');
+
+
+app.use("/webhook", bodyParser.raw({ type: "*/*" }));
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -49,7 +53,7 @@ app.use(passport.session());
 
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000","https://ecommerce-pern-app.onrender.com"],
   methods:["POST","GET"],
   credentials:true,
 }));
@@ -61,6 +65,7 @@ app.use("/",loginRouter);
 app.use("/signup",customerRouter);
 app.use("/",cartRouter);
 app.use("/",stripeRouter);
+app.use("/",orderRouter);
 
 const PORT = process.env.PORT;
 app.listen(process.env.PORT, () => {

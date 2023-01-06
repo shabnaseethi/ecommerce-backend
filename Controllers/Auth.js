@@ -1,7 +1,7 @@
 require("dotenv").config();
 const client = require("../config/dbconfig");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 const { sign } = require("jsonwebtoken");
 
 module.exports = {
@@ -15,9 +15,10 @@ module.exports = {
 
   loginUser: async (req, res) => {
     // validateForm(req, res);
+   
     const potentialLogin = await client.query(
       "SELECT id, email, password,first_name,last_name FROM customer u WHERE u.email=$1",
-      [req.body.email]
+      [req.body.email.toLowerCase()]
     );
 
     if (potentialLogin.rowCount > 0) {
@@ -41,10 +42,10 @@ module.exports = {
         });
       } else {
         res.json({ loggedIn: false, status: "Wrong username or password!" });
-        console.log("not good");
+       
       }
     } else {
-      console.log("not good");
+     
       res.json({ loggedIn: false, status: "Wrong username or password!" });
     }
   },

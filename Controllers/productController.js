@@ -19,7 +19,6 @@ module.exports={
       },
       getProductById: (req, res) => {
         const id = req.params.id;
-        console.log(id);
         getProductById(id, (err, results) => {
           if (err) {
             console.log(err);

@@ -36,4 +36,16 @@ module.exports = {
       }
     );
   },
+  deleteCart:(data,callBack)=>{
+    client.query(
+        `DELETE FROM cart where customer_id = $1`,
+        [data.id],
+        (err,result)=>{
+            if(err){
+                return callBack(err);
+            }
+            return callBack(null,result.rows)
+        }
+    )
+  }
 };
