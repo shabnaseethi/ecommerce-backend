@@ -4,7 +4,7 @@ const router = express.Router();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 const { createOrder } = require("../Controllers/orderController");
 
-// price_1MJdBMIMbP7OC3kM7jMKFQbE
+
 
 router.post("/checkout", async (req, res) => {
   const items = req.body.items;
@@ -78,7 +78,7 @@ const createOrderItems = async (customer, data) => {
 };
 
 const endpointSecret =
-  "whsec_51ff0550e8214bc4b96f7f4f5e22c8f7f9f015f0ad88644a958d0d47ada804f3";
+  process.env.WEBHOOK_ENDPOINT;
 
 router.post(
   "/webhook",

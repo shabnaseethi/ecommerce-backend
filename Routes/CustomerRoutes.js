@@ -10,7 +10,6 @@ router.get('/',getUsers);
 router.get('/:id',getUserById);
 router.patch('/',updateUser);
 router.delete('/',deleteUser);
-router.post("/login")
 
   
 module.exports= router;

@@ -44,7 +44,6 @@ module.exports = {
   },
   getOrder: async (req, res) => {
     const body = req.body;
-
     const orderList = await client.query(
       `SELECT order_details.subtotal,order_details.status,
       order_details.ordered_on,order_items.product_id,order_items.count,
@@ -61,7 +60,6 @@ module.exports = {
   },
   getAllOrders: async (req, res) => {
     const body = req.body;
-
     const orderList = await client.query(
       `SELECT order_details.subtotal,order_details.status,
       order_details.ordered_on,order_items.product_id,order_items.count,

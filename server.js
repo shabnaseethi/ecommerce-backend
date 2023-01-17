@@ -10,14 +10,11 @@ const orderRouter = require("./Routes/orderRoutes");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const initializePassport = require("./config/Passport");
-const passport = require("passport");
 var cookieParser = require('cookie-parser');
-const router = require("./Routes/productRoutes");
 const stripeRouter = require("./Routes/StripeRoutes");
-
-var path = require('path');
-
+const passport = require('passport');
+const initializePassport =require("./config/PassportConfig")
+ initializePassport(passport);
 
 app.use("/webhook", bodyParser.raw({ type: "*/*" }));
 
@@ -31,25 +28,12 @@ app.use(
   session({
     secret: process.env.COOKIE_KEY,
     credentials:true,
-    name:"sid",
     resave: false,
     saveUninitialized: false,
-    cookie: { 
-      expires:60*60*24,
-      secure: false ,
-    cookie:{
-      secure:process.env.ENVIRONMENT === "production"?"true":"auto",
-      httponly:true,
-      sameSite:process.env.ENVIRONMENT === "production"?"none":"lax"
-
-    }} 
   })
 );
-
-router.use(passport.initialize());
+app.use(passport.initialize());
 app.use(passport.session());
-// initializePassport(passport); 
-
 
 
 app.use(cors({

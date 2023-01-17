@@ -84,7 +84,7 @@ module.exports = {
         data: results,
       });
     });
-  },
+    },
   updateUser: (req, res) => {
     const body = req.body;
     const salt = genSaltSync(10);

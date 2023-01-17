@@ -2,16 +2,26 @@
 const client = require("../config/dbconfig");
 
 module.exports = {
+  getShoppingcart:async(req,res)=>{
+    if(req.user){
+      res.status(200).json(req.user);
+     }
+     else{
+      res.status(401).json({message:"Not Authenticated"})
+     }
+
+  },
   createCart: async (req, res) => {
     const body = req.body;
-    
-    const cartItem = await client.query(
-      `insert into cart(customer_id,product_id,count,price) values ($1,$2,$3,$4) returning customer_id,product_id,count`,
-      [body.product.product.user_id, body.product.product.id, 1, body.product.product.price]
-    );
-    const productInfo = await client.query(`SELECT * FROM product where id=$1`,[body.product.product.id]);
-    res.send({customer_id:cartItem.rows[0].customer_id,product_id:productInfo.rows[0].id,count:cartItem.rows[0].count,
-    name:productInfo.rows[0].name,image:productInfo.rows[0].image,price:productInfo.rows[0].price,api_id:productInfo.rows[0].api_id});
+    if(req.body.product.product.user_id){
+      const cartItem = await client.query(
+        `insert into cart(customer_id,product_id,count,price) values ($1,$2,$3,$4) returning customer_id,product_id,count`,
+        [body.product.product.user_id, body.product.product.id, 1, body.product.product.price]
+      );
+      const productInfo = await client.query(`SELECT * FROM product where id=$1`,[body.product.product.id]);
+      res.send({customer_id:cartItem.rows[0].customer_id,product_id:productInfo.rows[0].id,count:cartItem.rows[0].count,
+      name:productInfo.rows[0].name,image:productInfo.rows[0].image,price:productInfo.rows[0].price,api_id:productInfo.rows[0].api_id});
+    }
    
   },
   incrementCart: async (req, res) => {
@@ -53,11 +63,18 @@ module.exports = {
   },
   getCart:async(req,res)=>{
     const id = req.params.id;
+
+   if(id){
     const cartList = await client.query(
       `SELECT cart.customer_id,cart.product_id,cart.count,product.name,product.image,product.price,product.api_id FROM cart INNER join product ON product.id = cart.product_id where customer_id=$1`,
       [id]
     );
+  
     res.send(cartList.rows)
+   }
+   else{
+    res.send("Bad Request")
+   }
   },
   removeCart:async(req,res)=>{
     const body = req.body;
