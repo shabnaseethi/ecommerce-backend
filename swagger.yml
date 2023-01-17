@@ -1,0 +1,108 @@
+swagger: "2.0"
+
+info:
+  description: "Codecademy E-commerce REST API"
+  version: "1.0.0"
+  title: "E-commerce REST API"
+
+schemes: 
+  - http
+
+host: localhost:4000
+
+basePath: "/"
+
+paths:
+  /users:
+    summary: GET all users
+    get:
+      summary: GET ALL USERS
+      description: Retrieve the user information from the database
+      operationId: get_users
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                customers:
+                  value: 
+                    {
+                        "success": 1,
+                        "data": [
+                            {
+                                "id": ,
+                                "email": "",
+                                "password": "",
+                                "first_name": "",
+                                "last_name": ""
+                            }
+                        ]
+                    }
+  /signup:
+    summary: Post new users
+    post:
+      summary: Create new users
+      description: Post new users to the database
+      operationId: sign_up
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                new user:
+                  value: 
+                     {
+                        "success": 1,
+                        "data": [
+                            {
+                                "id": ,
+                                "email": "",
+                                "password": "",
+                                "first_name": "",
+                                "last_name": ""
+                            }
+                        ]
+                    }
+  /user/:id:
+    summary: Get a user based on ID
+    get:
+      summary: Get user based on id
+      description: Retrieve a user from the database based on Id
+      operationId: get_userid
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                user/:id:
+                  value: 
+                       {
+                        "success": 1,
+                        "data": [
+                            {
+                                "id": ,
+                                "email": "",
+                                "password": "",
+                                "first_name": "",
+                                "last_name": ""
+                            }
+                        ]
+                    }
+  /login:
+    summary: Login authentication of users
+    description: login
+    post:
+      summary: posts email and password
+      description: check database for the authentication
+      operationId: login_user
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                '200':
+                  value: success

@@ -5,11 +5,11 @@ const { createUser,getUserById,getUsers,updateUser,deleteUser } = require('../Co
 
 
 
-router.post('/',createUser);
-router.get('/',getUsers);
-router.get('/:id',getUserById);
-router.patch('/',updateUser);
-router.delete('/',deleteUser);
+router.post('/signup',createUser);
+router.get('/users',getUsers);
+router.get('/user/:id',getUserById);
+router.patch('/user',updateUser);
+router.delete('/user',deleteUser);
 
   
 module.exports= router;
